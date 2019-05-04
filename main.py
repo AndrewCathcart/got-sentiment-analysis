@@ -13,4 +13,4 @@ with open('gameofthrones.csv', 'a') as file:
             since="2019-04-27").items():
         print(tweet.created_at, tweet.full_text)
         writer.writerow([tweet.created_at, tweet.full_text.encode('utf-8')])
-    writer.close()
+    file.close()

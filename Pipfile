@@ -10,6 +10,9 @@ tweepy = "*"
 pylint = "*"
 pandas = "*"
 autopep8 = "*"
+textblob = "*"
+sklearn = "*"
+ast = "*"
 
 [requires]
 python_version = "3.7"
