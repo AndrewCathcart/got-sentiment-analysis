@@ -11,8 +11,8 @@ pylint = "*"
 pandas = "*"
 autopep8 = "*"
 textblob = "*"
-sklearn = "*"
-ast = "*"
+html2text = "*"
+seaborn = "*"
 
 [requires]
 python_version = "3.7"
