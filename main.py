@@ -4,6 +4,9 @@ import ast
 import pandas as pd
 import numpy as np
 import os.path
+from textblob import TextBlob
+import matplotlib
+from matplotlib import pyplot as plt
 
 
 def clean_csv():
@@ -27,9 +30,29 @@ def clean_csv():
     df.tweet = df.tweet.apply(unescape, unicode_snob=True)
 
     # date range between 2019-04-27 00:00:00 to 2019-05-04 00:00:00
+    df = df.sort_index()
     df = df.loc[:'2019-05-04 00:00:00']
 
+    df = df.dropna()  # dropping 3 null tweets
+
     df.to_csv('cleaned_got.csv')
+
+
+def get_polarity(text):
+    """ The polarity score is a float within the range [-1.0, 1.0]. """
+    return TextBlob(text).sentiment.polarity
+
+
+def get_subjectivity(text):
+    """ Subjectivity is a float within the range [0.0, 1.0] where 0.0 is very objective and 1.0 is very subjective. """
+    return TextBlob(text).sentiment.subjectivity
+
+
+def try_decode(text):
+    try:
+        return text.decode('utf-8')
+    except:
+        return text
 
 
 clean_csv()
@@ -38,3 +61,13 @@ print('Reading cleaned csv...')
 df = pd.read_csv('cleaned_got.csv', header=0,
                  index_col='date', parse_dates=True)
 print('DataFrame loaded.')
+
+print('Calculating tweet polarity & subjectivity...')
+# decode, lower case, remove trailing whitespace
+df.tweet = df.tweet.apply(try_decode)
+df['polarity'] = df.tweet.apply(get_polarity)
+df['subjectivity'] = df.tweet.apply(get_subjectivity)
+
+print('Plotting polarity')
+df.polarity.plot()
+plt.savefig('polarity')

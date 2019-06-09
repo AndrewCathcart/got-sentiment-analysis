@@ -12,7 +12,7 @@ pandas = "*"
 autopep8 = "*"
 textblob = "*"
 html2text = "*"
-seaborn = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"
