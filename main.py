@@ -48,13 +48,6 @@ def get_subjectivity(text):
     return TextBlob(text).sentiment.subjectivity
 
 
-def try_decode(text):
-    try:
-        return text.decode('utf-8')
-    except:
-        return text
-
-
 clean_csv()
 
 print('Reading cleaned csv...')
@@ -63,8 +56,6 @@ df = pd.read_csv('cleaned_got.csv', header=0,
 print('DataFrame loaded.')
 
 print('Calculating tweet polarity & subjectivity...')
-# decode, lower case, remove trailing whitespace
-df.tweet = df.tweet.apply(try_decode)
 df['polarity'] = df.tweet.apply(get_polarity)
 df['subjectivity'] = df.tweet.apply(get_subjectivity)
 
