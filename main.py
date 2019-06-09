@@ -75,4 +75,19 @@ def plot_sentiment():
     plt.savefig('polarity')
 
 
-plot_sentiment()
+# plot_sentiment()
+df = pd.read_csv('got_sentiment.csv', header=0,
+                 index_col='date', parse_dates=True)
+
+# remove tweets where we couldn't determine polarity
+# zero_polarity = df[df.polarity == 0].index
+# df = df.drop(zero_polarity)
+
+df2 = df.drop(columns=['tweet', 'subjectivity'])
+
+# take the average of the samples per 5 minutes
+df2 = df2.resample('5T').mean()
+print(df2.head())
+print(df2.info())
+df2.plot(figsize=(32, 6), style='-')
+plt.savefig('polarity-2')
