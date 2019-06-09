@@ -10,4 +10,5 @@ It contains a dataset, `cleaned-got.csv`, which contains 595,703 unique tweets f
 These tweets detail users reactions to the highly anticipated [Game of Thrones Season 8 Episode 3 "The Long Night"](https://en.wikipedia.org/wiki/The_Long_Night_(Game_of_Thrones)) that aired on 2019-04-28.
 
 ## Future work
-Use SentiWordNet for Unsupervised Sentiment Analysis rather than relying on the rule-based TextBlob implementation
+- Use SentiWordNet for Unsupervised Sentiment Analysis rather than relying on the rule-based TextBlob implementation
+- Add more visualizations
