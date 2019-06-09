@@ -2,4 +2,4 @@
 secrets.py
 __pycache__
 gameofthrones.csv
-.DS_Store
+*.pkl
