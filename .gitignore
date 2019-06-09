@@ -1,6 +1,6 @@
 .vscode
 secrets.py
 __pycache__
-gameofthrones.csv
+*.csv
 *.pkl
-.DS_Store
+*.DS_Store

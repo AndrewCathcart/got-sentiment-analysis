@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 
 def clean_csv():
     """ Read gameofthrones.csv into a dataframe, clean it & save as cleaned_got.csv """
-    if os.path.exists('cleaned_got.csv'):
+    if os.path.exists('cleaned_got.csv') or not os.path.exists('gameofthrones.csv'):
         return
 
     df = pd.read_csv('gameofthrones.csv', header=0,
@@ -48,17 +48,31 @@ def get_subjectivity(text):
     return TextBlob(text).sentiment.subjectivity
 
 
-clean_csv()
+def sentiment_analysis():
+    """ Cleans the data and performs sentiment analysis on the tweets using TextBlob, saving this to got-sentiment.csv """
+    clean_csv()
 
-print('Reading cleaned csv...')
-df = pd.read_csv('cleaned_got.csv', header=0,
-                 index_col='date', parse_dates=True)
-print('DataFrame loaded.')
+    print('Reading cleaned csv...')
+    df = pd.read_csv('cleaned_got.csv', header=0,
+                     index_col='date', parse_dates=True)
+    print('DataFrame loaded.')
 
-print('Calculating tweet polarity & subjectivity...')
-df['polarity'] = df.tweet.apply(get_polarity)
-df['subjectivity'] = df.tweet.apply(get_subjectivity)
+    if os.path.exists('got_sentiment.csv'):
+        return
 
-print('Plotting polarity')
-df.polarity.plot()
-plt.savefig('polarity')
+    print('Calculating tweet polarity & subjectivity...')
+    df['polarity'] = df.tweet.apply(get_polarity)
+    df['subjectivity'] = df.tweet.apply(get_subjectivity)
+    df.to_csv('got_sentiment.csv')
+
+
+def plot_sentiment():
+    """ Plots polarity and subjectivity subplots from cleaned_got.csv """
+    df = pd.read_csv('got_sentiment.csv', header=0,
+                     index_col='date', parse_dates=True)
+    print('Plotting polarity')
+    df.polarity.plot(figsize=(64, 12), style='.')
+    plt.savefig('polarity')
+
+
+plot_sentiment()
